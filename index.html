@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Roof Solutions | Expert Roofing & Storm Restoration</title>
+    <meta name="description" content="Professional residential and commercial roofing services. Licensed, insured, and 5-star rated. Get your free roof inspection today!">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0F172A',
+                        brand: '#EA580C',
+                        'brand-dark': '#C2410C',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #0F172A; border-radius: 10px; }
+
+        /* Functional Before/After Slider */
+        .comparison-slider { position: relative; width: 100%; height: 450px; overflow: hidden; border-radius: 2rem; touch-action: pan-y; }
+        @media (max-width: 768px) { .comparison-slider { height: 300px; } }
+        
+        .comparison-slider .after { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .comparison-slider .before { position: absolute; inset: 0; width: 50%; height: 100%; overflow: hidden; z-index: 10; border-right: 4px solid white; }
+        .comparison-slider .before img { width: 100%; height: 100%; object-fit: cover; max-width: none; }
+        .comparison-slider .after img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .slider-handle { 
+            position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: white; z-index: 20; transform: translateX(-50%); cursor: ew-resize; 
+        }
+        .slider-handle::after { 
+            content: '↔'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: white; color: #0F172A; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+
+        /* Glassmorphism */
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        
+        /* Mobile-friendly horizontal scroll */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Text Balance for headlines */
+        .text-balance { text-wrap: balance; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans selection:bg-brand selection:text-white">
+
+    <!-- TOP BAR (PC ONLY) -->
+    <div class="bg-navy text-white py-2 px-4 text-[10px] font-black text-center tracking-[0.2em] hidden md:block">
+        <span class="text-brand">LATEST:</span> PROUDLY SERVING [CITY, STATE] WITH 24/7 EMERGENCY RESPONSE — <a href="tel:+15551234567" class="underline hover:text-brand transition">CALL (555) 123-4567</a>
+    </div>
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-[100] glass border-b border-slate-200/50 h-20 md:h-24 flex items-center">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-between items-center">
+            <a href="#" class="flex items-center space-x-2 group">
+                <div class="bg-navy p-2 rounded-xl group-hover:rotate-6 transition-transform">
+                    <i data-lucide="shield-check" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="flex flex-col -space-y-1">
+                    <span class="text-xl md:text-2xl font-black text-navy leading-none">ELITE<span class="text-brand">ROOF</span></span>
+                    <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-400">Solutions</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-8 font-black text-xs uppercase tracking-widest text-slate-600">
+                <a href="#services" class="hover:text-brand transition">Services</a>
+                <a href="#gallery" class="hover:text-brand transition">Results</a>
+                <a href="#reviews" class="hover:text-brand transition">Reviews</a>
+                <a href="#contact" class="bg-navy text-white px-8 py-4 rounded-full hover:bg-slate-800 transition shadow-xl shadow-navy/20">Free Quote</a>
+            </div>
+
+            <!-- Mobile Buttons -->
+            <div class="flex items-center space-x-3 lg:hidden">
+                <a href="tel:+15551234567" class="bg-brand text-white p-3 rounded-xl shadow-lg shadow-brand/20">
+                    <i data-lucide="phone" class="w-5 h-5"></i>
+                </a>
+                <button id="mobile-menu-btn" class="p-2 text-navy">
+                    <i data-lucide="menu" class="w-8 h-8"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white border-b shadow-2xl p-6 space-y-4 animate-in fade-in slide-in-from-top-4">
+            <a href="#services" class="block text-lg font-black py-3 border-b border-slate-100">Our Services</a>
+            <a href="#gallery" class="block text-lg font-black py-3 border-b border-slate-100">Project Gallery</a>
+            <a href="#reviews" class="block text-lg font-black py-3 border-b border-slate-100">Client Reviews</a>
+            <a href="#contact" class="block bg-brand text-white text-center py-4 rounded-2xl font-black text-lg shadow-xl shadow-brand/20">GET FREE ESTIMATE</a>
+        </div>
+    </header>
+
+    <!-- CINEMATIC HERO -->
+    <section class="relative min-h-[85vh] md:min-h-[90vh] flex items-center overflow-hidden bg-navy">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1632759162352-f11d946d4e7f?q=90&w=2000" class="w-full h-full object-cover scale-105 opacity-40 grayscale-[20%]" alt="Master Roofing">
+            <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/60 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center py-16">
+            <div class="text-white text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md px-5 py-2 rounded-full text-[10px] md:text-xs font-black tracking-[0.2em] mb-8 border border-white/10">
+                    <span class="w-2 h-2 bg-brand rounded-full animate-ping"></span>
+                    <span>CERTIFIED MASTER INSTALLERS</span>
+                </div>
+                <h1 class="text-4xl md:text-7xl font-black mb-6 leading-[1.05] tracking-tight text-balance">
+                    The Last Roof <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-orange-400 italic">You'll Ever Need.</span>
+                </h1>
+                <p class="text-base md:text-xl text-slate-300 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
+                    20+ years of local excellence. We provide lifetime warranties and transparent pricing for residential & commercial properties.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="#contact" class="group bg-brand text-white px-10 py-5 rounded-full text-lg font-black shadow-2xl shadow-brand/40 hover:scale-105 transition-all flex items-center justify-center">
+                        GET FREE INSPECTION
+                        <i data-lucide="arrow-right" class="ml-2 w-5 h-5 group-hover:translate-x-1 transition"></i>
+                    </a>
+                    <a href="tel:+15551234567" class="bg-white/10 backdrop-blur-lg border border-white/20 text-white px-10 py-5 rounded-full text-lg font-black hover:bg-white/20 transition-all flex items-center justify-center">
+                        CALL (555) 123-4567
+                    </a>
+                </div>
+
+                <!-- Trust Stats: 2x2 Grid on Mobile, Row on PC -->
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 mt-16 opacity-70">
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="star" class="text-yellow-400 fill-current w-5 h-5"></i>
+                        <span class="text-[10px] font-black uppercase tracking-widest">5.0 Google Rating</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <i data-lucide="award" class="text-brand w-5 h-5"></i>
+                        <span class="text-[10px] font-black uppercase tracking-widest">BBB A+ Accredited</span>
+                    </div>
+                    <div class="flex items-center space-x-3 col-span-2 lg:col-span-1">
+                        <i data-lucide="shield" class="text-green-400 w-5 h-5"></i>
+                        <span class="text-[10px] font-black uppercase tracking-widest">Lifetime Warranty</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating PC Visual (Hidden on Mobile) -->
+            <div class="hidden lg:block relative">
+                <div class="animate-float relative z-10">
+                    <div class="bg-white/95 p-10 rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.4)] border border-white/50">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-2xl font-black text-navy">Neighborhood Stats</h3>
+                            <div class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-[10px] font-black">LIVE UPDATES</div>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                                <span class="font-bold text-slate-500">Roofs Installed</span>
+                                <span class="font-black text-2xl text-navy">2,480+</span>
+                            </div>
+                            <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                                <span class="font-bold text-slate-500">Happy Neighbors</span>
+                                <span class="font-black text-2xl text-brand">99.4%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-slate-500">Crews On-Site</span>
+                                <span class="font-black text-2xl text-blue-600">14 Teams</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-brand/20 rounded-full blur-3xl"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES (2-Col Mobile Grid) -->
+    <section id="services" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center md:text-left mb-16">
+                <span class="text-brand font-black uppercase tracking-[0.3em] text-xs mb-4 block">Proven Solutions</span>
+                <h2 class="text-3xl md:text-5xl font-black text-navy text-balance">Built for Performance.</h2>
+            </div>
+
+            <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                <!-- Large Featured Card -->
+                <div class="col-span-2 bg-slate-100 p-8 md:p-12 rounded-[2.5rem] relative overflow-hidden group min-h-[300px] flex flex-col justify-end">
+                    <img src="https://images.unsplash.com/photo-1628744448840-55bdb2497bd4?q=80&w=600" class="absolute inset-0 w-full h-full object-cover opacity-10 grayscale group-hover:scale-110 transition-transform duration-1000">
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 bg-navy text-white rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="home" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-2xl md:text-4xl font-black text-navy mb-4">Residential <br>Replacement</h4>
+                        <p class="text-slate-600 max-w-sm mb-6 hidden md:block text-sm">GAF Master Elite certified installations with lifetime shingle protection.</p>
+                        <a href="#" class="inline-flex items-center font-black text-xs uppercase tracking-widest text-brand">Get Pricing <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- 2-Column Small Cards on Mobile -->
+                <div class="bg-navy p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] text-white flex flex-col justify-between group">
+                    <i data-lucide="cloud-lightning" class="w-8 h-8 md:w-10 md:h-10 text-brand mb-6"></i>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-black mb-2">Emergency</h4>
+                        <p class="text-slate-400 text-[10px] md:text-xs mb-4">Rapid response for leak containment.</p>
+                        <i data-lucide="plus-circle" class="w-6 h-6 text-white/20 group-hover:text-brand transition"></i>
+                    </div>
+                </div>
+
+                <div class="bg-slate-100 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] flex flex-col justify-between group">
+                    <i data-lucide="building" class="w-8 h-8 md:w-10 md:h-10 text-navy mb-6"></i>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-black mb-2">Commercial</h4>
+                        <p class="text-slate-500 text-[10px] md:text-xs mb-4">TPO, PVC & Flat Roof systems.</p>
+                        <i data-lucide="plus-circle" class="w-6 h-6 text-navy/20 group-hover:text-navy transition"></i>
+                    </div>
+                </div>
+
+                <div class="bg-slate-100 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] flex flex-col justify-between group">
+                    <i data-lucide="droplet" class="w-8 h-8 md:w-10 md:h-10 text-blue-500 mb-6"></i>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-black mb-2">Gutters</h4>
+                        <p class="text-slate-500 text-[10px] md:text-xs mb-4">Seamless K-style installations.</p>
+                        <i data-lucide="plus-circle" class="w-6 h-6 text-navy/20 group-hover:text-navy transition"></i>
+                    </div>
+                </div>
+
+                <div class="bg-navy text-white p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] flex flex-col justify-between group">
+                    <i data-lucide="wind" class="w-8 h-8 md:w-10 md:h-10 text-brand mb-6"></i>
+                    <div>
+                        <h4 class="text-lg md:text-xl font-black mb-2">Siding</h4>
+                        <p class="text-slate-400 text-[10px] md:text-xs mb-4">Vinyl & Hardie board experts.</p>
+                        <i data-lucide="plus-circle" class="w-6 h-6 text-white/20 group-hover:text-brand transition"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BEFORE/AFTER (PC Layout + Mobile Responsive) -->
+    <section id="gallery" class="py-24 bg-navy text-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-5 gap-16 items-center">
+                <div class="lg:col-span-2 text-center lg:text-left">
+                    <span class="text-brand font-black uppercase tracking-[0.3em] text-xs mb-4 block">Proven Workmanship</span>
+                    <h2 class="text-4xl md:text-5xl font-black mb-8 leading-tight">Seeing is Believing.</h2>
+                    <p class="text-slate-400 text-lg mb-10 leading-relaxed">Drag the slider to see how we restored this storm-damaged home to its original glory using premium architectural shingles.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/5 p-4 rounded-2xl border border-white/10 text-center">
+                            <span class="block text-2xl font-black text-brand">24H</span>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Emergency Service</span>
+                        </div>
+                        <div class="bg-white/5 p-4 rounded-2xl border border-white/10 text-center">
+                            <span class="block text-2xl font-black text-brand">25Y</span>
+                            <span class="text-[10px] font-bold text-slate-500 uppercase">Labor Warranty</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3">
+                    <div class="comparison-slider" id="ba-slider">
+                        <div class="after">
+                            <img src="https://images.unsplash.com/photo-1516750105099-4b8a83e217ee?q=80&w=1200" alt="After Elite Install">
+                        </div>
+                        <div class="before" id="before-box">
+                            <img src="https://images.unsplash.com/photo-1460500063983-994d4c27756c?q=80&w=1200" alt="Before - Damaged">
+                        </div>
+                        <div class="slider-handle" id="slider-handle"></div>
+                        <div class="absolute top-4 left-4 bg-navy/80 px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest z-30">BEFORE</div>
+                        <div class="absolute top-4 right-4 bg-brand px-3 py-1 rounded-md text-[10px] font-black uppercase tracking-widest z-30">ELITE NEW</div>
+                    </div>
+                    <p class="text-center mt-6 text-slate-500 text-[10px] font-black uppercase tracking-[0.3em] animate-pulse">← SLIDE TO COMPARE →</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS (Horizontal Snap for Mobile) -->
+    <section id="reviews" class="py-24 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+                <div class="max-w-xl">
+                    <h2 class="text-4xl md:text-5xl font-black text-navy mb-4">Hear From Your Neighbors.</h2>
+                    <p class="text-slate-500 font-bold uppercase text-xs tracking-widest flex items-center">
+                        <i data-lucide="star" class="text-yellow-400 fill-current w-4 h-4 mr-2"></i> Over 2,000 5-Star Reviews
+                    </p>
+                </div>
+                <div class="hidden md:flex space-x-2">
+                    <button id="prev-rev" class="p-4 bg-slate-100 rounded-full hover:bg-navy hover:text-white transition"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
+                    <button id="next-rev" class="p-4 bg-slate-100 rounded-full hover:bg-navy hover:text-white transition"><i data-lucide="arrow-right" class="w-6 h-6"></i></button>
+                </div>
+            </div>
+
+            <!-- Snap Carousel -->
+            <div id="rev-container" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar space-x-6 pb-12">
+                <div class="min-w-[85%] md:min-w-[450px] snap-center bg-slate-50 p-10 rounded-[3rem] border border-slate-100 flex flex-col justify-between h-[350px]">
+                    <p class="text-lg md:text-xl text-slate-600 font-medium italic leading-relaxed">"Elite Roof Solutions treated my home like their own. The communication was insane—text updates with photos every hour. Simply the best."</p>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-brand text-white rounded-2xl flex items-center justify-center font-black text-xl">SM</div>
+                        <div>
+                            <h5 class="font-black text-navy text-lg leading-none mb-1">Sarah Miller</h5>
+                            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Property Owner, [City]</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="min-w-[85%] md:min-w-[450px] snap-center bg-slate-50 p-10 rounded-[3rem] border border-slate-100 flex flex-col justify-between h-[350px]">
+                    <p class="text-lg md:text-xl text-slate-600 font-medium italic leading-relaxed">"Honest, transparent, and fast. They replaced my entire roof in a single day and left the yard spotless. I couldn't be happier with the result."</p>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-navy text-white rounded-2xl flex items-center justify-center font-black text-xl">TR</div>
+                        <div>
+                            <h5 class="font-black text-navy text-lg leading-none mb-1">Thomas Reed</h5>
+                            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Homeowner, [City]</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="min-w-[85%] md:min-w-[450px] snap-center bg-slate-50 p-10 rounded-[3rem] border border-slate-100 flex flex-col justify-between h-[350px]">
+                    <p class="text-lg md:text-xl text-slate-600 font-medium italic leading-relaxed">"After the hail storm, I didn't know who to trust. Elite handled my insurance claim and got me a brand new roof for just my deductible."</p>
+                    <div class="flex items-center space-x-4">
+                        <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-black text-xl">KJ</div>
+                        <div>
+                            <h5 class="font-black text-navy text-lg leading-none mb-1">Kelly Johnson</h5>
+                            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">Real Estate Agent</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT (PC Insane Layout) -->
+    <section id="contact" class="py-24 bg-slate-50 overflow-hidden relative">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-navy hidden lg:block rounded-l-[10rem]"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+            <div class="py-12">
+                <h2 class="text-4xl md:text-6xl font-black text-navy mb-8 leading-tight">Get Your <br><span class="text-brand italic">Instant Quote</span> Today.</h2>
+                <p class="text-lg text-slate-600 mb-12">No high-pressure sales. Just an honest assessment from a master-certified roofing specialist.</p>
+                
+                <div class="space-y-8">
+                    <div class="flex items-center space-x-6 group">
+                        <div class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center text-brand group-hover:bg-brand group-hover:text-white transition-all">
+                            <i data-lucide="phone-call" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Call Center</span>
+                            <span class="text-2xl font-black text-navy">(555) 123-4567</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-6 group">
+                        <div class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            <i data-lucide="mail" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">Email Experts</span>
+                            <span class="text-2xl font-black text-navy">inspections@eliteroof.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white p-8 md:p-12 rounded-[4rem] shadow-2xl">
+                <form class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black uppercase text-slate-400 ml-2">Your Name</label>
+                            <input type="text" class="w-full bg-slate-50 border-none p-5 rounded-2xl outline-none focus:ring-2 focus:ring-brand font-bold">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-black uppercase text-slate-400 ml-2">Phone</label>
+                            <input type="tel" class="w-full bg-slate-50 border-none p-5 rounded-2xl outline-none focus:ring-2 focus:ring-brand font-bold">
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2">Service Address</label>
+                        <input type="text" class="w-full bg-slate-50 border-none p-5 rounded-2xl outline-none focus:ring-2 focus:ring-brand font-bold">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-black uppercase text-slate-400 ml-2">Service Type</label>
+                        <select class="w-full bg-slate-50 border-none p-5 rounded-2xl outline-none focus:ring-2 focus:ring-brand font-bold text-slate-500">
+                            <option>Residential Roof Replacement</option>
+                            <option>Storm Damage Inspection</option>
+                            <option>Emergency Leak Repair</option>
+                            <option>Commercial Bid</option>
+                        </select>
+                    </div>
+                    <button class="w-full bg-navy text-white py-6 rounded-2xl font-black text-xl hover:bg-brand transition-all shadow-xl shadow-navy/30 active:scale-95">SEND MY REQUEST</button>
+                    <p class="text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">Typical response time: 30-60 minutes</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy text-white pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-12 mb-20">
+            <div class="col-span-2 lg:col-span-1">
+                <a href="#" class="flex items-center space-x-2 mb-8 group">
+                    <div class="bg-brand p-2 rounded-xl">
+                        <i data-lucide="shield-check" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight">ELITE<span class="text-brand">ROOF</span></span>
+                </a>
+                <p class="text-slate-400 text-sm font-medium leading-relaxed mb-8">Serving [City, State] with the best materials, the best crews, and the best warranties in the USA.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h6 class="font-black text-[10px] uppercase tracking-[0.3em] text-brand mb-8">Solutions</h6>
+                <ul class="space-y-4 text-slate-400 font-bold text-xs uppercase">
+                    <li><a href="#" class="hover:text-white transition">Replacement</a></li>
+                    <li><a href="#" class="hover:text-white transition">Repair</a></li>
+                    <li><a href="#" class="hover:text-white transition">Commercial</a></li>
+                    <li><a href="#" class="hover:text-white transition">Financing</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h6 class="font-black text-[10px] uppercase tracking-[0.3em] text-brand mb-8">Company</h6>
+                <ul class="space-y-4 text-slate-400 font-bold text-xs uppercase">
+                    <li><a href="#" class="hover:text-white transition">About Us</a></li>
+                    <li><a href="#" class="hover:text-white transition">Reviews</a></li>
+                    <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                    <li><a href="#" class="hover:text-white transition">Privacy</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h6 class="font-black text-[10px] uppercase tracking-[0.3em] text-brand mb-8">Local Hub</h6>
+                <div class="text-slate-400 text-xs font-bold space-y-4 uppercase">
+                    <p class="flex items-start leading-relaxed"><i data-lucide="map-pin" class="w-5 h-5 mr-3 text-brand flex-shrink-0"></i> 123 Professional Dr. <br>[City], [State]</p>
+                    <p class="flex items-center"><i data-lucide="phone" class="w-5 h-5 mr-3 text-brand"></i> (555) 123-4567</p>
+                    <div class="flex items-center space-x-3 grayscale opacity-40 mt-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/GAF_Materials_Corporation_Logo.svg" alt="GAF" class="h-6">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/d/df/Owens_Corning_logo.svg" alt="OC" class="h-6">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 pt-12 border-t border-white/5 text-center md:text-left">
+            <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">&copy; 2026 ELITE ROOF SOLUTIONS. BUILT TO LAST.</p>
+        </div>
+    </footer>
+
+    <!-- MOBILE STICKY ACTIONS -->
+    <div class="lg:hidden fixed bottom-6 left-6 right-6 z-[110] flex space-x-3">
+        <a href="tel:+15551234567" class="flex-1 bg-navy text-white py-4 rounded-2xl shadow-2xl font-black text-center text-sm flex items-center justify-center">
+            <i data-lucide="phone" class="w-4 h-4 mr-2"></i> CALL
+        </a>
+        <a href="#contact" class="flex-[1.5] bg-brand text-white py-4 rounded-2xl shadow-2xl font-black text-center text-sm flex items-center justify-center">
+            FREE QUOTE <i data-lucide="chevron-right" class="ml-2 w-4 h-4"></i>
+        </a>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Before/After Slider Logic (Mobile Friendly)
+        const slider = document.getElementById('ba-slider');
+        const beforeBox = document.getElementById('before-box');
+        const handle = document.getElementById('slider-handle');
+
+        const moveSlider = (e) => {
+            let xPos;
+            const rect = slider.getBoundingClientRect();
+            if (e.type.includes('touch')) {
+                xPos = e.touches[0].clientX - rect.left;
+            } else {
+                xPos = e.clientX - rect.left;
+            }
+            const percent = Math.max(0, Math.min(100, (xPos / rect.width) * 100));
+            beforeBox.style.width = percent + '%';
+            handle.style.left = percent + '%';
+        };
+
+        slider.addEventListener('mousemove', moveSlider);
+        slider.addEventListener('touchmove', moveSlider, { passive: true });
+
+        // Review Carousel Buttons
+        const revContainer = document.getElementById('rev-container');
+        document.getElementById('next-rev').addEventListener('click', () => {
+            revContainer.scrollBy({ left: 350, behavior: 'smooth' });
+        });
+        document.getElementById('prev-rev').addEventListener('click', () => {
+            revContainer.scrollBy({ left: -350, behavior: 'smooth' });
+        });
+
+        // Close mobile menu on anchor click
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+    </script>
+</body>
+</html>
